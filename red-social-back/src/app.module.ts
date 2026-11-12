@@ -6,6 +6,7 @@ import { AppService } from './app.service.js';
 import { AuthModule } from './auth/auth.module.js';
 import { UsuariosModule } from './usuarios/usuarios.module.js';
 import { PublicacionesModule } from './publicaciones/publicaciones.module.js';
+import { AuthenticationModule } from '@nestjs/authentication';
 
 @Module({
   imports: [
@@ -19,6 +20,10 @@ import { PublicacionesModule } from './publicaciones/publicaciones.module.js';
     AuthModule,
     UsuariosModule,
     PublicacionesModule,
+    AuthenticationModule.forRoot({
+      globalGuard: false,
+      session: {},
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
