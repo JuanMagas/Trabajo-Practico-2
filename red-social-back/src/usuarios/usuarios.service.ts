@@ -40,4 +40,10 @@ export class UsuariosService {
     const usuario = await this.usuarioModel.findOne({ [campo]: valor.toLowerCase().trim() }).exec();
     return usuario !== null;
   }
+
+  async buscarPorIdentificador(identificador: string) {
+    const valor = identificador.toLowerCase().trim();
+    const campo = valor.includes('@') ? 'email' : 'username';
+    return this.usuarioModel.findOne({ [campo]: valor }).exec();
+  }
 }

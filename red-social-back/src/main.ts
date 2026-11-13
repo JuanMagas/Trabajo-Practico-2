@@ -7,6 +7,8 @@ dns.setServers(['8.8.8.8', '1.1.1.1']);
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, stopAtFirstError: true }));
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, stopAtFirstError: true }));
   await app.listen(process.env.PORT ?? 3000);
 }
