@@ -14,7 +14,7 @@ import {
   requisitosClaveValidator,
 } from '../../validadores/usuario.validadores';
 
-const TAMANIO_MAXIMO_FOTO = 5 * 1024 * 1024; // 5 MB, igual que el back
+const TAMANIO_MAXIMO_FOTO = 4 * 1024 * 1024; // 4 MB
 
 @Component({
   imports: [ReactiveFormsModule, RouterLink, MostrarClaveDirective, Modal],
@@ -119,7 +119,7 @@ export class Registro {
       return;
     }
     if (archivo.size > TAMANIO_MAXIMO_FOTO) {
-      this.errorFoto.set('La imagen no puede pesar más de 5 MB.');
+      this.errorFoto.set('La imagen no puede pesar más de 4 MB.');
       input.value = '';
       return;
     }

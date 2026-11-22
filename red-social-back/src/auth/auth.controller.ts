@@ -19,7 +19,7 @@ export class AuthController {
   @UseInterceptors(
     FileInterceptor('fotoPerfil', {
       storage: memoryStorage(),
-      limits: { fileSize: 5 * 1024 * 1024 },
+      limits: { fileSize: 4 * 1024 * 1024 }, // 4 MB: Vercel no acepta pedidos de más de 4,5 MB
     }),
   )
   async registro(@Body() datos: RegistroDto, @UploadedFile() file?: Express.Multer.File) {
