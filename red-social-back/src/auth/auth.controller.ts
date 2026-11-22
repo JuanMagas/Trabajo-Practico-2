@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, HttpCode, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import { AuthService } from './auth.service.js';
@@ -37,5 +37,15 @@ export class AuthController {
   @HttpCode(200)
   login(@Body() datos: LoginDto) {
     return this.authService.login(datos);
+  }
+
+  // Para el validador asincrónico del formulario de registro
+  // Ej: GET /auth/disponible/username/juanma -> { disponible: false }
+  @Get('disponible/:campo/:valor')
+  async disponible(@Param('campo') campo: string, @Param('valor') valor: string) {
+    if (campo !== 'email' && campo !== 'username') {
+      throw new BadRequestException('El campo debe ser email o username');
+    }
+    return { disponible: !(await this.usuariosService.existe(campo, valor)) };
   }
 }

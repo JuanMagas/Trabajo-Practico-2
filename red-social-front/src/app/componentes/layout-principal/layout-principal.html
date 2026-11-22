@@ -1,0 +1,35 @@
+<header class="barra">
+  <nav class="barra-contenido">
+    <a routerLink="/publicaciones" class="logo">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+        <circle cx="16" cy="16" r="10" />
+        <path d="M16 2v8M16 22v8M2 16h8M22 16h8" />
+      </svg>
+      <span>Clutch</span>
+    </a>
+
+    <div class="enlaces">
+      <a routerLink="/publicaciones" routerLinkActive="activo" ariaCurrentWhenActive="page">Publicaciones</a>
+      <a routerLink="/mi-perfil" routerLinkActive="activo" ariaCurrentWhenActive="page">Mi perfil</a>
+    </div>
+
+    <div class="cuenta">
+      @if (usuario(); as u) {
+        @if (u.fotoPerfil) {
+          <img class="avatar" [src]="u.fotoPerfil" [alt]="'Foto de ' + u.nombre" />
+        } @else {
+          <span class="avatar iniciales" aria-hidden="true">{{ u.nombre[0] }}{{ u.apellido[0] }}</span>
+        }
+      }
+      <button type="button" class="btn salir" aria-label="Cerrar sesión" (click)="salir()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main class="contenido">
+  <router-outlet />
+</main>

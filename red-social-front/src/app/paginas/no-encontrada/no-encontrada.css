@@ -1,0 +1,32 @@
+.no-encontrada {
+  min-height: 100vh;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.codigo {
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: 120px;
+  line-height: 1;
+  color: var(--primario);
+}
+
+.no-encontrada h1 {
+  font-size: 40px;
+}
+
+.no-encontrada > p:not(.codigo) {
+  color: var(--texto-secundario);
+  max-width: 420px;
+}
+
+.no-encontrada .btn {
+  margin-top: 8px;
+  text-decoration: none;
+}

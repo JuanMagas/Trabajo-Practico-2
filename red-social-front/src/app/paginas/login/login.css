@@ -1,0 +1,168 @@
+.pagina {
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Columna izquierda */
+.presentacion {
+  flex: 1 1 560px;
+  min-width: 0;
+  padding: 48px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 56px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: 30px;
+}
+
+.logo svg {
+  color: var(--primario);
+}
+
+.titular {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.titular h1 {
+  font-size: clamp(44px, 6vw, 68px);
+  line-height: 0.98;
+  letter-spacing: -0.5px;
+}
+
+.titular p {
+  max-width: 480px;
+  font-size: 19px;
+  color: var(--texto-secundario);
+}
+
+.killfeed {
+  max-width: 560px;
+}
+
+.killfeed-titulo {
+  margin-bottom: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--texto-secundario);
+}
+
+.killfeed ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.killfeed-fila {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: var(--superficie);
+  font-size: 15px;
+  color: var(--texto-secundario);
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+}
+
+.killfeed-fila:last-child {
+  opacity: 0.6;
+}
+
+.killfeed-usuario {
+  font-weight: 600;
+  color: var(--secundario);
+}
+
+.icono-me-gusta {
+  color: var(--primario);
+}
+
+.killfeed-publicacion {
+  flex: 1;
+  min-width: 0;
+  color: var(--texto);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.killfeed-hace {
+  font-size: 13px;
+}
+
+/* Columna derecha */
+.acceso {
+  flex: 1 1 420px;
+  min-width: 0;
+  padding: 56px 32px;
+  background: var(--superficie);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.acceso form {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.encabezado-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.encabezado-form h2 {
+  font-size: 40px;
+}
+
+.encabezado-form p {
+  color: var(--texto-secundario);
+}
+
+.entrar {
+  height: 50px;
+  margin-top: 6px;
+  font-size: 20px;
+}
+
+.registro {
+  font-size: 15px;
+  color: var(--texto-secundario);
+}
+
+.registro a {
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .presentacion {
+    padding: 32px 20px;
+    gap: 32px;
+  }
+
+  .killfeed {
+    display: none;
+  }
+
+  .acceso {
+    padding: 40px 20px;
+  }
+}

@@ -1,0 +1,175 @@
+.pagina {
+  min-height: 100vh;
+  padding: 40px 24px 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.encabezado {
+  width: 100%;
+  max-width: 840px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.encabezado p {
+  font-size: 15px;
+  color: var(--texto-secundario);
+}
+
+.encabezado p a {
+  font-weight: 600;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--texto);
+  text-decoration: none;
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: 26px;
+}
+
+.logo svg {
+  color: var(--primario);
+}
+
+.tarjeta {
+  width: 100%;
+  max-width: 840px;
+  padding: 40px 48px 44px;
+  background: var(--superficie);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 28px 100%, 0 calc(100% - 28px));
+}
+
+.cabecera {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 28px;
+}
+
+.avatar {
+  width: 104px;
+  height: 104px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--superficie-alta);
+  border: 2px dashed var(--borde-fuerte);
+  color: var(--texto-secundario);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar:has(img) {
+  border-style: solid;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cabecera-texto {
+  flex: 1 1 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cabecera-texto h1 {
+  font-size: 44px;
+}
+
+.subir {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.subir .btn {
+  height: 40px;
+  font-size: 15px;
+  border-color: var(--borde-fuerte);
+}
+
+.subir .ayuda,
+.subir .error {
+  font-size: 14px;
+}
+
+.subir .ayuda {
+  color: var(--texto-secundario);
+}
+
+.subir .error {
+  color: var(--error);
+}
+
+/* El input real queda invisible: se usa el label como botón */
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.subir:has(.oculto:focus-visible) .btn {
+  outline: 2px solid var(--secundario);
+  outline-offset: 2px;
+}
+
+.grilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px 24px;
+}
+
+.completo {
+  grid-column: 1 / -1;
+}
+
+.fila-etiqueta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pie {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pie .btn-primario {
+  height: 50px;
+  padding: 0 40px;
+  font-size: 20px;
+}
+
+@media (max-width: 600px) {
+  .tarjeta {
+    padding: 28px 20px 32px;
+  }
+
+  .cabecera-texto h1 {
+    font-size: 36px;
+  }
+
+  .pie .btn-primario {
+    width: 100%;
+  }
+}

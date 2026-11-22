@@ -1,0 +1,120 @@
+:root {
+  --fondo: #121A24;
+  --superficie: #1B2633;
+  --superficie-alta: #243244;
+  --borde: #34465C;
+  --borde-fuerte: #4A6078;
+
+  --texto: #E8EEF4;
+  --texto-secundario: #9AABBD;
+
+  --primario: #F2A541;
+  --secundario: #5AA9E6;
+  --secundario-hover: #8CC4EE;
+  --exito: #7FD1A8;
+  --error: #FF8A7A;
+
+  --fuente-titulos: 'Barlow Condensed', sans-serif;
+  --fuente-texto: 'Barlow', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: var(--fuente-texto);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+p { margin: 0; }
+
+a { color: var(--secundario); }
+a:hover { color: var(--secundario-hover); }
+
+input, textarea, select, button { font: inherit; color: inherit; }
+
+:focus-visible { outline: 2px solid var(--secundario); outline-offset: 2px; }
+
+/* Esquinas cortadas */
+.chaflan { clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px)); }
+.chaflan-panel { clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%); }
+
+/* Paneles */
+.panel { background: var(--superficie); padding: 24px; }
+
+/* Botones */
+.btn {
+  height: 46px;
+  padding: 0 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--borde);
+  background: transparent;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+
+.btn-primario {
+  border: 0;
+  background: var(--primario);
+  color: var(--fondo);
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: 19px;
+}
+
+/* Campos de formulario */
+.campo { display: flex; flex-direction: column; gap: 6px; }
+.campo label { font-size: 14px; font-weight: 500; }
+.campo input, .campo textarea {
+  min-height: 46px;
+  padding: 0 14px;
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+}
+.campo textarea { padding: 12px 14px; resize: vertical; }
+.campo input[type="date"] { color-scheme: dark; }
+.campo .ayuda { font-size: 13px; color: var(--texto-secundario); }
+.campo .error { font-size: 13px; color: var(--error); }
+.campo .ok { font-size: 13px; color: var(--exito); }
+.campo.invalido input, .campo.invalido textarea { border-color: var(--error); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* Contraseña con botón para mostrarla */
+.campo-clave {
+  display: flex;
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+}
+.campo-clave:focus-within { outline: 2px solid var(--secundario); outline-offset: 2px; }
+.campo .campo-clave input { flex: 1; min-width: 0; border: 0; background: transparent; }
+.campo .campo-clave input:focus-visible { outline: none; }
+.campo.invalido .campo-clave { border-color: var(--error); }
+.ver-clave {
+  width: 46px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: var(--texto-secundario);
+  cursor: pointer;
+}
+.ver-clave:hover { color: var(--texto); }

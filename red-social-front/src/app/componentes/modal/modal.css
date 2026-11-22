@@ -1,0 +1,54 @@
+.modal {
+  width: min(440px, calc(100vw - 32px));
+  padding: 32px;
+  border: 0;
+  background: var(--superficie);
+  color: var(--texto);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.modal:not([open]) {
+  display: none;
+}
+
+.modal::backdrop {
+  background: rgb(8 12 18 / 0.75);
+}
+
+.icono {
+  color: var(--exito);
+}
+
+.modal.error .icono {
+  color: var(--error);
+}
+
+h2 {
+  font-size: 30px;
+}
+
+.contenido {
+  color: var(--texto-secundario);
+}
+
+.acciones {
+  margin-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .modal[open] {
+    animation: aparecer 160ms ease-out;
+  }
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
