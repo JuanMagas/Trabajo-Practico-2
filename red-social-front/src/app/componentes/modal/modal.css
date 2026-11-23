@@ -21,6 +21,10 @@
   color: var(--exito);
 }
 
+.modal.aviso .icono {
+  color: var(--primario);
+}
+
 .modal.error .icono {
   color: var(--error);
 }

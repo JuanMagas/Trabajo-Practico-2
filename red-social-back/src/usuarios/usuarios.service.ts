@@ -46,4 +46,8 @@ export class UsuariosService {
     const campo = valor.includes('@') ? 'email' : 'username';
     return this.usuarioModel.findOne({ [campo]: valor }).exec();
   }
+
+  async buscarPorId(id: string) {
+    return this.usuarioModel.findById(id).exec();
+  }
 }

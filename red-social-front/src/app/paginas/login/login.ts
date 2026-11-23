@@ -27,6 +27,7 @@ export class Login {
   private router = inject(Router);
 
   enviando = signal(false);
+  motivoCierre = this.sesion.motivoCierre;
   errorEnvio = signal<string | null>(null);
 
   formulario = new FormGroup({
@@ -68,7 +69,7 @@ export class Login {
     this.enviando.set(true);
     this.auth.login(identificador!, password!).subscribe({
       next: (respuesta) => {
-        this.sesion.iniciar(respuesta.usuario);
+        this.sesion.iniciar(respuesta.usuario, respuesta.token);
         this.router.navigateByUrl('/publicaciones');
       },
       error: (error) => {

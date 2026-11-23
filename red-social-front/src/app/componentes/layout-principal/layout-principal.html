@@ -33,3 +33,11 @@
 <main class="contenido">
   <router-outlet />
 </main>
+
+<app-modal titulo="Tu sesión vence en 5 minutos" tipo="aviso" [abierto]="avisoVencimiento()" (cerrado)="cerrarAviso()">
+  <p>¿Querés extenderla? Si no, vas a tener que volver a entrar.</p>
+  <button acciones type="button" class="btn" (click)="cerrarAviso()">Ahora no</button>
+  <button acciones type="button" class="btn btn-primario chaflan" [disabled]="extendiendo()" (click)="extenderSesion()">
+    {{ extendiendo() ? 'Extendiendo…' : 'Extender sesión' }}
+  </button>
+</app-modal>

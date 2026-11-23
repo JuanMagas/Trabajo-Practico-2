@@ -137,6 +137,13 @@
   color: var(--texto-secundario);
 }
 
+.aviso-sesion {
+  padding: 12px 14px;
+  border: 1px solid var(--primario);
+  background: var(--superficie-alta);
+  font-size: 15px;
+}
+
 .entrar {
   height: 50px;
   margin-top: 6px;

@@ -8,7 +8,7 @@ import { Component, effect, ElementRef, input, output, viewChild } from '@angula
 export class Modal {
   abierto = input(false);
   titulo = input.required<string>();
-  tipo = input<'exito' | 'error'>('exito');
+    tipo = input<'exito' | 'error' | 'aviso'>('exito');
 
   cerrado = output<void>();
 

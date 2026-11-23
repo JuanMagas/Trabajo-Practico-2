@@ -14,4 +14,5 @@ export interface Usuario {
 
 export interface RespuestaAuth {
   usuario: Usuario;
+  token: string;
 }

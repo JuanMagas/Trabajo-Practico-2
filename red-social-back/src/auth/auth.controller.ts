@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, HttpCode, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, HttpCode, Param, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import { AuthService } from './auth.service.js';
@@ -6,6 +6,9 @@ import { UsuariosService } from '../usuarios/usuarios.service.js';
 import { FileService } from '../file/file.service.js';
 import { RegistroDto } from './dto/registro.dto.js';
 import { LoginDto } from './dto/login.dto.js';
+import { SesionGuard } from './guards/sesion.guard.js';
+import { UsuarioActual } from './decoradores/usuario-actual.decorator.js';
+import type { UsuarioDocument } from '../usuarios/entities/usuario.entity.js';
 
 @Controller('auth')
 export class AuthController {
@@ -47,5 +50,19 @@ export class AuthController {
       throw new BadRequestException('El campo debe ser email o username');
     }
     return { disponible: !(await this.usuariosService.existe(campo, valor)) };
+  }
+
+  @Post('autorizar')
+  @HttpCode(200)
+  @UseGuards(SesionGuard)
+  autorizar(@UsuarioActual() usuario: UsuarioDocument) {
+    return this.authService.autorizar(usuario);
+  }
+
+  @Post('refrescar')
+  @HttpCode(200)
+  @UseGuards(SesionGuard)
+  refrescar(@UsuarioActual() usuario: UsuarioDocument) {
+    return this.authService.refrescar(usuario);
   }
 }

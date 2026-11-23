@@ -1,19 +1,29 @@
 import { Routes } from '@angular/router';
+import { invitadoGuard } from './guards/invitado.guard';
+import { sesionGuard } from './guards/sesion.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  {
+    path: '',
+    pathMatch: 'full',
+    title: 'Clutch',
+    loadComponent: () => import('./paginas/cargando/cargando').then((m) => m.Cargando),
+  },
   {
     path: 'login',
+    canActivate: [invitadoGuard],
     title: 'Entrar | Clutch',
     loadComponent: () => import('./paginas/login/login').then((m) => m.Login),
   },
   {
     path: 'registro',
+    canActivate: [invitadoGuard],
     title: 'Crear cuenta | Clutch',
     loadComponent: () => import('./paginas/registro/registro').then((m) => m.Registro),
   },
   {
     path: '',
+    canActivate: [sesionGuard],
     loadComponent: () =>
       import('./componentes/layout-principal/layout-principal').then((m) => m.LayoutPrincipal),
     children: [

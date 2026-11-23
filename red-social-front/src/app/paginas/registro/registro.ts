@@ -155,7 +155,7 @@ export class Registro {
     this.enviando.set(true);
     this.auth.registro(datos).subscribe({
       next: (respuesta) => {
-        this.sesion.iniciar(respuesta.usuario);
+        this.sesion.iniciar(respuesta.usuario, respuesta.token);
         this.enviando.set(false);
         this.registroExitoso.set(true);
       },

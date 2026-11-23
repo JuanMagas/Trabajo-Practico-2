@@ -1,9 +1,14 @@
-<dialog #dialogo class="modal chaflan" [class.error]="tipo() === 'error'" (close)="cerrado.emit()" aria-labelledby="modal-titulo">
+<dialog #dialogo class="modal chaflan" [class.error]="tipo() === 'error'" [class.aviso]="tipo() === 'aviso'" (close)="cerrado.emit()" aria-labelledby="modal-titulo">
   <div class="icono" aria-hidden="true">
     @if (tipo() === 'error') {
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
         <circle cx="12" cy="12" r="9" />
         <path d="M12 7v6M12 16.5v.5" />
+      </svg>
+    } @else if (tipo() === 'aviso') {
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 7v5l3 2" />
       </svg>
     } @else {
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">

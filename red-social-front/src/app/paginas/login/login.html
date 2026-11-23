@@ -50,7 +50,9 @@
         <h2>Entrar</h2>
         <p>Con tu usuario o tu correo.</p>
       </div>
-
+      @if (motivoCierre()) {
+        <p class="aviso-sesion" role="status">{{ motivoCierre() }}</p>
+      }
       <div class="campo" [class.invalido]="error('identificador')">
         <label for="identificador">Usuario o correo</label>
         <input id="identificador" type="text" formControlName="identificador" autocomplete="username" />

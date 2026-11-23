@@ -1,4 +1,4 @@
-// Producción: se completa con la URL de Vercel cuando hagamos el deploy
+// Producción: el back publicado en Vercel
 export const environment = {
-  apiUrl: 'https://TU-BACK.vercel.app',
+  apiUrl: 'https://trabajo-practico-2-eosin.vercel.app',
 };
