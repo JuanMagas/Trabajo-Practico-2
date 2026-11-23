@@ -13,8 +13,10 @@ import { AuthenticationModule } from '@nestjs/authentication';
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
+        useFactory: (config: ConfigService) => ({
         uri: config.getOrThrow<string>('MONGO_URI'),
+        serverSelectionTimeoutMS: 5000,
+        retryAttempts: 2,
       }),
     }),
     AuthModule,
