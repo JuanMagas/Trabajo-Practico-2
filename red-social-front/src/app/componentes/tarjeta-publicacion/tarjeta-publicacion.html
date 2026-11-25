@@ -3,7 +3,7 @@
     @if (publicacion().autor.fotoPerfil) {
       <img class="avatar" [src]="publicacion().autor.fotoPerfil" alt="" />
     } @else {
-      <span class="avatar iniciales" aria-hidden="true">{{ iniciales() }}</span>
+      <span class="avatar iniciales" aria-hidden="true">{{ publicacion().autor | iniciales }}</span>
     }
     <div class="autor">
       <span class="nombre">{{ publicacion().autor.nombre }} {{ publicacion().autor.apellido }}</span>
@@ -19,7 +19,11 @@
   </header>
 
   <div class="cuerpo">
-    <h2>{{ publicacion().titulo }}</h2>
+    @if (enDetalle()) {
+      <h1 class="titulo-detalle">{{ publicacion().titulo }}</h1>
+    } @else {
+      <h2><a [routerLink]="['/publicaciones', publicacion()._id]">{{ publicacion().titulo }}</a></h2>
+    }
     <p class="mensaje">{{ publicacion().mensaje }}</p>
   </div>
 
@@ -43,6 +47,14 @@
       Me gusta
       <span class="cantidad">{{ cantidadMeGusta() }}</span>
     </button>
+    @if (!enDetalle()) {
+      <a class="btn-comentarios" [routerLink]="['/publicaciones', publicacion()._id]">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M4 5h16v11H9l-5 4z" />
+        </svg>
+        {{ publicacion().cantidadComentarios === 1 ? '1 comentario' : publicacion().cantidadComentarios + ' comentarios' }}
+      </a>
+    }
   </footer>
 </article>
 

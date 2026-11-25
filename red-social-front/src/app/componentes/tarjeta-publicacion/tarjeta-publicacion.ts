@@ -1,3 +1,4 @@
+import { RouterLink } from '@angular/router';
 import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { Modal } from '../modal/modal';
 import { Publicacion } from '../../modelos/publicacion';
@@ -5,9 +6,10 @@ import { TiempoRelativoPipe } from '../../pipes/tiempo-relativo.pipe';
 import { PublicacionesApi } from '../../servicios/publicaciones';
 import { Sesion } from '../../servicios/sesion';
 import { mensajeDeError } from '../../utilidades/errores';
+import { InicialesPipe } from '../../pipes/iniciales.pipe';
 
 @Component({
-  imports: [Modal, TiempoRelativoPipe],
+  imports: [RouterLink, Modal, TiempoRelativoPipe, InicialesPipe],
   selector: 'app-tarjeta-publicacion',
   styleUrl: './tarjeta-publicacion.css',
   templateUrl: './tarjeta-publicacion.html',
@@ -17,6 +19,8 @@ export class TarjetaPublicacion {
   private sesion = inject(Sesion);
 
   publicacion = input.required<Publicacion>();
+  // En la página de la publicación el título no es un enlace y los comentarios se muestran abajo
+  enDetalle = input(false);
   eliminada = output<string>();
 
   // Copia local del estado de me gusta: se actualiza al instante al tocar el botón
@@ -33,11 +37,6 @@ export class TarjetaPublicacion {
   puedeEliminar = computed(() => {
     const usuario = this.sesion.usuario();
     return !!usuario && (usuario._id === this.publicacion().autor._id || usuario.perfil === 'administrador');
-  });
-
-  iniciales = computed(() => {
-    const autor = this.publicacion().autor;
-    return `${autor.nombre[0] ?? ''}${autor.apellido[0] ?? ''}`;
   });
 
   alternarMeGusta() {

@@ -1,0 +1,28 @@
+<div class="pagina">
+  <a routerLink="/publicaciones" class="volver">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M15 6l-6 6 6 6" />
+    </svg>
+    Volver a publicaciones
+  </a>
+
+  @if (cargando()) {
+    <app-spinner texto="Cargando publicación…" />
+  } @else if (publicacion(); as p) {
+    <app-tarjeta-publicacion [publicacion]="p" [enDetalle]="true" (eliminada)="alEliminar()" />
+
+    <div class="panel chaflan-panel">
+      <h2 class="titulo-comentarios">
+        Comentarios
+        <span>{{ p.cantidadComentarios }}</span>
+      </h2>
+      <app-lista-comentarios [publicacionId]="p._id" />
+    </div>
+  } @else {
+    <div class="panel chaflan-panel no-disponible">
+      <h1>No encontramos esta publicación</h1>
+      <p>{{ error() }}</p>
+      <a routerLink="/publicaciones" class="btn btn-primario chaflan">Ver todas las publicaciones</a>
+    </div>
+  }
+</div>

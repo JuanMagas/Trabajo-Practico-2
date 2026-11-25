@@ -152,6 +152,14 @@
 .pie {
   display: flex;
   justify-content: flex-end;
+  gap: 12px;
+}
+
+.pie .cancelar {
+  height: 50px;
+  padding: 0 28px;
+  color: var(--texto);
+  text-decoration: none;
 }
 
 .pie .btn-primario {
@@ -169,7 +177,78 @@
     font-size: 36px;
   }
 
-  .pie .btn-primario {
+  .pie {
+    flex-direction: column-reverse;
+  }
+
+  .pie .btn-primario,
+  .pie .cancelar {
     width: 100%;
   }
+}
+
+/* Alta desde el panel de administración: ya está dentro del layout con barra */
+.en-panel {
+  min-height: auto;
+  padding: 0;
+  align-items: stretch;
+}
+
+.volver {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--texto-secundario);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.volver:hover {
+  color: var(--texto);
+}
+
+.perfil {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.perfil legend {
+  padding: 0;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.opciones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.opcion {
+  padding: 14px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--texto-secundario);
+}
+
+.opcion:has(input:checked) {
+  border-color: var(--primario);
+}
+
+.opcion input {
+  margin-top: 3px;
+  accent-color: var(--primario);
+}
+
+.opcion strong {
+  display: block;
+  font-size: 16px;
+  color: var(--texto);
 }

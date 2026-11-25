@@ -4,11 +4,14 @@ import { Modal } from '../modal/modal';
 import { Publicacion } from '../../modelos/publicacion';
 import { PublicacionesApi } from '../../servicios/publicaciones';
 import { mensajeDeError } from '../../utilidades/errores';
+import { AutoAlturaDirective } from '../../directivas/auto-altura.directive';
+import { AutofocoDirective } from '../../directivas/autofoco.directive';
+import { MostrarClaveDirective } from '../../directivas/mostrar-clave.directive';
 
 const TAMANIO_MAXIMO_IMAGEN = 4 * 1024 * 1024; // 4 MB, igual que el back
 
 @Component({
-  imports: [ReactiveFormsModule, Modal],
+  imports: [ReactiveFormsModule, Modal, AutoAlturaDirective, AutofocoDirective, MostrarClaveDirective],
   selector: 'app-nueva-publicacion',
   styleUrl: './nueva-publicacion.css',
   templateUrl: './nueva-publicacion.html',

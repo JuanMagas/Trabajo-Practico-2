@@ -44,6 +44,11 @@ export class PublicacionesController {
     return this.publicacionesService.listar(filtros, usuario);
   }
 
+  @Get(':id')
+  obtener(@Param('id', ParseObjectIdPipe) id: Types.ObjectId, @UsuarioActual() usuario: UsuarioDocument) {
+    return this.publicacionesService.obtener(id, usuario);
+  }
+
   @Delete(':id')
   @HttpCode(204)
   eliminar(@Param('id', ParseObjectIdPipe) id: Types.ObjectId, @UsuarioActual() usuario: UsuarioDocument) {

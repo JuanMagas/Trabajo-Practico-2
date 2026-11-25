@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, mongo } from 'mongoose';
 import { PasswordHasher } from '@nestjs/authentication';
@@ -12,7 +12,8 @@ export class UsuariosService {
     private readonly passwordHasher: PasswordHasher,
   ) {}
 
-  async crear(datos: RegistroDto) {
+  // RegistroDto o CrearUsuarioDto (que además trae el perfil)
+  async crear(datos: RegistroDto & { perfil?: string }) {
     await this.verificarDisponibles(datos.email, datos.username);
 
     const passwordHasheada = await this.passwordHasher.hash(datos.password);
@@ -49,5 +50,17 @@ export class UsuariosService {
 
   async buscarPorId(id: string) {
     return this.usuarioModel.findById(id).exec();
+  }
+
+  // Todos, los más nuevos primero (el toJSON ya saca la contraseña)
+  async listar() {
+    return this.usuarioModel.find().sort({ createdAt: -1 }).exec();
+  }
+
+  async cambiarActivo(id: string, activo: boolean) {
+    const resultado = await this.usuarioModel.updateOne({ _id: id }, { activo }).exec();
+    if (resultado.matchedCount === 0) {
+      throw new NotFoundException('El usuario no existe');
+    }
   }
 }

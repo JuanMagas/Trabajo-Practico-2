@@ -1,18 +1,14 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { filter, firstValueFrom } from 'rxjs';
 import { Modal } from '../../componentes/modal/modal';
 import { Auth } from '../../servicios/auth';
+import { UsuariosApi } from '../../servicios/usuarios';
 import { Sesion } from '../../servicios/sesion';
 import { mensajeDeError } from '../../utilidades/errores';
 import { MostrarClaveDirective } from '../../directivas/mostrar-clave.directive';
-import {
-  clavesCoincidenValidator,
-  disponibleValidator,
-  fechaPasadaValidator,
-  requisitosClaveValidator,
-} from '../../validadores/usuario.validadores';
+import { clavesCoincidenValidator, disponibleValidator, fechaPasadaValidator, requisitosClaveValidator } from '../../validadores/usuario.validadores';
 
 const TAMANIO_MAXIMO_FOTO = 4 * 1024 * 1024; // 4 MB
 
@@ -26,6 +22,12 @@ export class Registro {
   private auth = inject(Auth);
   private sesion = inject(Sesion);
   private router = inject(Router);
+  private usuariosApi = inject(UsuariosApi);
+
+  // La misma pantalla sirve para el registro público y para el alta que hace un administrador.
+  // La ruta /usuarios/nuevo trae data: { admin: true }
+  esAdmin = inject(ActivatedRoute).snapshot.data['admin'] === true;
+  usuarioCreado = signal(false);
 
   formulario = new FormGroup(
     {
@@ -54,6 +56,8 @@ export class Registro {
       repetirPassword: new FormControl('', [Validators.required]),
       fechaNacimiento: new FormControl('', [Validators.required, fechaPasadaValidator()]),
       descripcion: new FormControl('', [Validators.maxLength(200)]),
+            // Solo se usa en el alta del administrador
+      perfil: new FormControl<'usuario' | 'administrador'>('usuario', { nonNullable: true }),
     },
     { validators: [clavesCoincidenValidator('password', 'repetirPassword')] },
   );
@@ -142,7 +146,7 @@ export class Registro {
       return;
     }
 
-    const { repetirPassword, ...valores } = this.formulario.getRawValue();
+    const { repetirPassword, perfil, ...valores } = this.formulario.getRawValue();
     const datos = new FormData();
     for (const [campo, valor] of Object.entries(valores)) {
       datos.append(campo, valor ?? '');
@@ -153,6 +157,21 @@ export class Registro {
     }
 
     this.enviando.set(true);
+    if (this.esAdmin) {
+      datos.append('perfil', perfil);
+      // El admin crea la cuenta pero sigue con su propia sesión
+      this.usuariosApi.crear(datos).subscribe({
+        next: () => {
+          this.enviando.set(false);
+          this.usuarioCreado.set(true);
+        },
+        error: (error) => {
+          this.enviando.set(false);
+          this.errorEnvio.set(mensajeDeError(error));
+        },
+      });
+      return;
+    }
     this.auth.registro(datos).subscribe({
       next: (respuesta) => {
         this.sesion.iniciar(respuesta.usuario, respuesta.token);
@@ -164,6 +183,10 @@ export class Registro {
         this.errorEnvio.set(mensajeDeError(error));
       },
     });
+  }
+
+  volverAUsuarios() {
+    this.router.navigateByUrl('/dashboard/usuarios');
   }
 
   irAPublicaciones() {

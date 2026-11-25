@@ -3,9 +3,10 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
 import { Modal } from '../modal/modal';
 import { Auth } from '../../servicios/auth';
 import { Sesion } from '../../servicios/sesion';
+import { InicialesPipe } from '../../pipes/iniciales.pipe';
 
 @Component({
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, Modal],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, Modal, InicialesPipe],
   selector: 'app-layout-principal',
   styleUrl: './layout-principal.css',
   templateUrl: './layout-principal.html',

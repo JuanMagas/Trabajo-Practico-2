@@ -11,6 +11,10 @@
     <div class="enlaces">
       <a routerLink="/publicaciones" routerLinkActive="activo" ariaCurrentWhenActive="page">Publicaciones</a>
       <a routerLink="/mi-perfil" routerLinkActive="activo" ariaCurrentWhenActive="page">Mi perfil</a>
+      @if (usuario()?.perfil === 'administrador') {
+        <a routerLink="/dashboard/usuarios" routerLinkActive="activo" ariaCurrentWhenActive="page">Usuarios</a>
+        <a routerLink="/dashboard/estadisticas" routerLinkActive="activo" ariaCurrentWhenActive="page">Estadísticas</a>
+      }
     </div>
 
     <div class="cuenta">
@@ -18,7 +22,7 @@
         @if (u.fotoPerfil) {
           <img class="avatar" [src]="u.fotoPerfil" [alt]="'Foto de ' + u.nombre" />
         } @else {
-          <span class="avatar iniciales" aria-hidden="true">{{ u.nombre[0] }}{{ u.apellido[0] }}</span>
+          <span class="avatar iniciales" aria-hidden="true">{{ u | iniciales }}</span>
         }
       }
       <button type="button" class="btn salir" aria-label="Cerrar sesión" (click)="salir()">

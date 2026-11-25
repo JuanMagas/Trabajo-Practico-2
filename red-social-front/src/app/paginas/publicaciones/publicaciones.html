@@ -51,7 +51,7 @@
         @if (u.fotoPerfil) {
           <img class="avatar" [src]="u.fotoPerfil" alt="" />
         } @else {
-          <span class="avatar iniciales" aria-hidden="true">{{ u.nombre[0] }}{{ u.apellido[0] }}</span>
+          <span class="avatar iniciales" aria-hidden="true">{{ u | iniciales }}</span>
         }
         <div>
           <p class="nombre">{{ u.nombre }} {{ u.apellido }}</p>

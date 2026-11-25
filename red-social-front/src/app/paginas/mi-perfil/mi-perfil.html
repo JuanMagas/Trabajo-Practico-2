@@ -1,2 +1,70 @@
-<h1>Mi perfil</h1>
-<p>Acá van a ir tus datos y tus últimas publicaciones.</p>
+@if (usuario(); as u) {
+  <div class="pagina">
+    <section class="perfil panel chaflan-panel">
+      @if (u.fotoPerfil) {
+        <img class="avatar" [src]="u.fotoPerfil" [alt]="'Foto de perfil de ' + u.nombre" />
+      } @else {
+        <span class="avatar iniciales" aria-hidden="true">{{ u | iniciales }}</span>
+      }
+
+      <div class="identidad">
+        <h1>{{ u.nombre }} {{ u.apellido }}</h1>
+        <p class="usuario">
+          &#64;{{ u.username }}
+          @if (u.perfil === 'administrador') {
+            <span class="etiqueta">Administrador</span>
+          }
+        </p>
+        @if (u.descripcion) {
+          <p class="descripcion">{{ u.descripcion }}</p>
+        }
+      </div>
+
+      <dl class="datos">
+        <div>
+          <dt>Correo</dt>
+          <dd>{{ u.email }}</dd>
+        </div>
+        <div>
+          <dt>Fecha de nacimiento</dt>
+          <dd>{{ u.fechaNacimiento | date: 'longDate' : 'UTC' }} ({{ u.fechaNacimiento | edad }})</dd>
+        </div>
+        <div>
+          <dt>En Clutch desde</dt>
+          <dd>{{ u.createdAt | date: 'MMMM yyyy' }}</dd>
+        </div>
+        <div>
+          <dt>Publicaciones</dt>
+          <dd>{{ total() }}</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="ultimas">
+      <h2>Mis últimas publicaciones</h2>
+
+      @if (cargando()) {
+        <app-spinner texto="Cargando tus publicaciones…" />
+      } @else if (error()) {
+        <div class="panel chaflan-panel vacio">
+          <p>{{ error() }}</p>
+          <button type="button" class="btn" (click)="cargar()">Reintentar</button>
+        </div>
+      } @else if (publicaciones().length === 0) {
+        <div class="panel chaflan-panel vacio">
+          <p>Todavía no publicaste nada.</p>
+          <a routerLink="/publicaciones" class="btn btn-primario chaflan">Publicar mi primera jugada</a>
+        </div>
+      } @else {
+        @for (publicacion of publicaciones(); track publicacion._id) {
+          <div class="bloque">
+            <app-tarjeta-publicacion [publicacion]="publicacion" (eliminada)="cargar()" />
+            <div class="comentarios-bloque">
+              <app-lista-comentarios [publicacionId]="publicacion._id" [porPagina]="3" [permitirComentar]="false" />
+            </div>
+          </div>
+        }
+      }
+    </section>
+  </div>
+}

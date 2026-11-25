@@ -1,0 +1,36 @@
+<section class="comentarios" aria-label="Comentarios">
+  @if (permitirComentar()) {
+    <form class="nuevo" [formGroup]="formulario" (ngSubmit)="comentar()">
+      <label [for]="'comentar-' + publicacionId()" class="solo-lector">Escribí un comentario</label>
+      <textarea [id]="'comentar-' + publicacionId()" rows="2" placeholder="Escribí un comentario" formControlName="mensaje" appAutoAltura appAutofoco></textarea>
+      @if (errorEnvio()) {
+        <span class="error">{{ errorEnvio() }}</span>
+      }
+      <button type="submit" class="btn btn-primario chaflan" [disabled]="enviando()">
+        {{ enviando() ? 'Comentando…' : 'Comentar' }}
+      </button>
+    </form>
+  }
+
+  @if (cargando()) {
+    <app-spinner texto="Cargando comentarios…" />
+  } @else if (error()) {
+    <p class="vacio">{{ error() }}</p>
+  } @else if (comentarios().length === 0) {
+    <p class="vacio">Todavía no hay comentarios.</p>
+  } @else {
+    <ul>
+      @for (comentario of comentarios(); track comentario._id) {
+        <li>
+          <app-comentario [comentario]="comentario" [publicacionId]="publicacionId()" (editado)="reemplazar($event)" />
+        </li>
+      }
+    </ul>
+
+    @if (comentarios().length < total()) {
+      <button type="button" class="btn cargar-mas" [disabled]="cargandoMas()" (click)="cargarMas()">
+        {{ cargandoMas() ? 'Cargando…' : 'Cargar más (' + (total() - comentarios().length) + ')' }}
+      </button>
+    }
+  }
+</section>

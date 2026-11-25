@@ -1,0 +1,158 @@
+.pagina {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.encabezado {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+}
+
+.encabezado h1 {
+  font-size: 44px;
+}
+
+.filtros {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.atajos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.atajo {
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--borde);
+  background: transparent;
+  color: var(--texto-secundario);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.atajo:hover {
+  color: var(--texto);
+}
+
+.atajo.activo {
+  border-color: var(--primario);
+  color: var(--texto);
+}
+
+.fechas {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.fechas input {
+  height: 42px;
+  padding: 0 12px;
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  color-scheme: dark;
+}
+
+.fechas .btn-primario {
+  height: 42px;
+  padding: 0 22px;
+  font-size: 17px;
+}
+
+.error {
+  font-size: 13px;
+  color: var(--error);
+}
+
+.grilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 20px;
+}
+
+.ancha {
+  grid-column: 1 / -1;
+}
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.tarjeta header h2 {
+  font-size: 26px;
+}
+
+.tarjeta header p {
+  color: var(--texto-secundario);
+  font-size: 15px;
+}
+
+.sin-datos {
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--texto-secundario);
+  text-align: center;
+}
+
+details summary {
+  cursor: pointer;
+  color: var(--texto-secundario);
+  font-size: 14px;
+}
+
+table {
+  width: 100%;
+  margin-top: 10px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th,
+td {
+  padding: 6px 8px;
+  text-align: left;
+  border-bottom: 1px solid var(--superficie-alta);
+}
+
+th:last-child,
+td:last-child {
+  text-align: right;
+}
+
+th {
+  color: var(--texto-secundario);
+  font-weight: 500;
+}
+
+.vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .grilla {
+    grid-template-columns: 1fr;
+  }
+
+  .filtros {
+    align-items: stretch;
+  }
+}

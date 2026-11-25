@@ -100,7 +100,12 @@
     display: none;
   }
 
+  /* Con los enlaces de admin no entran todos: se desplazan de costado */
   .enlaces {
     gap: 16px;
+    min-width: 0;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
   }
 }

@@ -1,0 +1,71 @@
+.comentario {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cabecera {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.usuario {
+  font-weight: 600;
+  color: var(--secundario);
+}
+
+.meta {
+  font-size: 13px;
+  color: var(--texto-secundario);
+}
+
+.editar {
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: var(--texto-secundario);
+  cursor: pointer;
+  font-size: 13px;
+  text-decoration: underline;
+}
+
+.editar:hover {
+  color: var(--texto);
+}
+
+.mensaje {
+  line-height: 1.5;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.edicion {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.edicion textarea {
+  padding: 10px 12px;
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  resize: vertical;
+}
+
+.error {
+  font-size: 13px;
+  color: var(--error);
+}
+
+.botones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.botones .btn {
+  height: 38px;
+  font-size: 15px;
+}

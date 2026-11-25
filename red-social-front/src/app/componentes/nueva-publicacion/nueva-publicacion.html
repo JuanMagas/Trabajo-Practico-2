@@ -9,7 +9,7 @@
 
   <div class="campo-linea" [class.invalido]="error('mensaje')">
     <label for="nueva-mensaje" class="solo-lector">Mensaje</label>
-    <textarea id="nueva-mensaje" rows="2" placeholder="Contá qué pasó en la ronda" formControlName="mensaje"></textarea>
+    <textarea id="nueva-mensaje" rows="2" placeholder="Contá qué pasó en la ronda" formControlName="mensaje" appAutoAltura appAutofoco></textarea>
     @if (error('mensaje'); as mensaje) {
       <span class="error">{{ mensaje }}</span>
     }

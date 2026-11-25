@@ -1,0 +1,74 @@
+<div class="pagina">
+  <div class="encabezado">
+    <div>
+      <h1>Usuarios</h1>
+      @if (!cargando()) {
+        <p class="resumen">{{ usuarios().length }} en total · {{ activos() }} habilitados</p>
+      }
+    </div>
+    <a routerLink="/dashboard/usuarios/nuevo" class="btn btn-primario chaflan">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+        <path d="M12 5v14M5 12h14" />
+      </svg>
+      Nuevo usuario
+    </a>
+  </div>
+
+  @if (cargando()) {
+    <app-spinner texto="Cargando usuarios…" />
+  } @else {
+    <ul class="lista">
+      @for (u of usuarios(); track u._id) {
+        <li class="fila panel" [class.inactivo]="!u.activo">
+          @if (u.fotoPerfil) {
+            <img class="avatar" [src]="u.fotoPerfil" [alt]="'Foto de ' + u.nombre" />
+          } @else {
+            <span class="avatar iniciales" aria-hidden="true">{{ u | iniciales }}</span>
+          }
+
+          <div class="datos">
+            <span class="nombre">
+              {{ u.nombre }} {{ u.apellido }}
+              @if (u._id === miId()) {
+                <span class="vos">(vos)</span>
+              }
+            </span>
+            <span class="detalle">&#64;{{ u.username }} · {{ u.email }}</span>
+          </div>
+
+          <div class="etiquetas">
+            <span class="etiqueta" [class.admin]="u.perfil === 'administrador'">
+              {{ u.perfil === 'administrador' ? 'Administrador' : 'Usuario' }}
+            </span>
+            <span class="estado" [class.off]="!u.activo">{{ u.activo ? 'Habilitado' : 'Deshabilitado' }}</span>
+          </div>
+
+          <div class="accion">
+            @if (u._id !== miId()) {
+              @if (u.activo) {
+                <button type="button" class="btn" [disabled]="procesando() === u._id" (click)="aDeshabilitar.set(u)">
+                  Deshabilitar
+                </button>
+              } @else {
+                <button type="button" class="btn habilitar" [disabled]="procesando() === u._id" (click)="habilitar(u)">
+                  {{ procesando() === u._id ? 'Habilitando…' : 'Habilitar' }}
+                </button>
+              }
+            }
+          </div>
+        </li>
+      }
+    </ul>
+  }
+</div>
+
+<app-modal titulo="¿Deshabilitar este usuario?" tipo="aviso" [abierto]="!!aDeshabilitar()" (cerrado)="aDeshabilitar.set(null)">
+  <p>&#64;{{ aDeshabilitar()?.username }} no va a poder entrar a Clutch hasta que lo vuelvas a habilitar.</p>
+  <button acciones type="button" class="btn" (click)="aDeshabilitar.set(null)">Cancelar</button>
+  <button acciones type="button" class="btn btn-primario chaflan" (click)="confirmarBaja()">Deshabilitar</button>
+</app-modal>
+
+<app-modal titulo="No pudimos completar la acción" tipo="error" [abierto]="!!error()" (cerrado)="error.set(null)">
+  <p>{{ error() }}</p>
+  <button acciones type="button" class="btn" (click)="error.set(null)">Entendido</button>
+</app-modal>

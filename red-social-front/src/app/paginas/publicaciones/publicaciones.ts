@@ -7,11 +7,12 @@ import { OrdenPublicaciones, Publicacion } from '../../modelos/publicacion';
 import { PublicacionesApi } from '../../servicios/publicaciones';
 import { Sesion } from '../../servicios/sesion';
 import { mensajeDeError } from '../../utilidades/errores';
+import { InicialesPipe } from '../../pipes/iniciales.pipe';
 
 const POR_PAGINA = 10;
 
 @Component({
-  imports: [RouterLink, NuevaPublicacion, Spinner, TarjetaPublicacion],
+  imports: [RouterLink, NuevaPublicacion, Spinner, TarjetaPublicacion, InicialesPipe],
   selector: 'app-publicaciones',
   styleUrl: './publicaciones.css',
   templateUrl: './publicaciones.html',

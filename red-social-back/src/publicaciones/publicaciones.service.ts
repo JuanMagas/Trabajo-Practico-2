@@ -94,7 +94,14 @@ export class PublicacionesService {
     return publicacion;
   }
 
-  private async verificarQueExiste(id: Types.ObjectId) {
+  // Una sola publicación, con los mismos datos que el listado
+  async obtener(id: Types.ObjectId, usuario: UsuarioDocument) {
+    await this.verificarQueExiste(id);
+    return this.buscarUna(id, usuario._id);
+  }
+
+  // Pública: la usa también ComentariosService
+  async verificarQueExiste(id: Types.ObjectId) {
     const existe = await this.publicacionModel.exists({ _id: id, activa: true });
     if (!existe) {
       throw new NotFoundException('La publicación no existe');
@@ -110,7 +117,7 @@ export class PublicacionesService {
     };
   }
 
-  // Agrega la cantidad de me gusta y si el usuario actual ya dio el suyo.
+  // Agrega la cantidad de me gusta, si el usuario actual ya dio el suyo y la cantidad de comentarios.
   // La lista completa no se envía al front: solo los dos datos que necesita.
   private calcularMeGusta(usuarioId: Types.ObjectId): PipelineStage[] {
     return [
@@ -120,7 +127,22 @@ export class PublicacionesService {
           meGustaYo: { $in: [usuarioId, '$meGusta.usuario'] },
         },
       },
-      { $project: { meGusta: 0 } },
+            { $project: { meGusta: 0 } },
+      {
+        $lookup: {
+          from: 'comentarios',
+          localField: '_id',
+          foreignField: 'publicacion',
+          as: 'comentarios',
+          pipeline: [{ $count: 'cantidad' }],
+        },
+      },
+      {
+        $addFields: {
+          cantidadComentarios: { $ifNull: [{ $first: '$comentarios.cantidad' }, 0] },
+        },
+      },
+      { $project: { comentarios: 0 } },
     ];
   }
 

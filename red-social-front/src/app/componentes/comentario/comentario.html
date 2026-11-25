@@ -1,0 +1,32 @@
+<div class="comentario">
+  <div class="cabecera">
+    <span class="usuario">{{ comentario().autor.username }}</span>
+    <span class="meta">
+      {{ comentario().createdAt | tiempoRelativo }}
+      @if (comentario().modificado) {
+        <span class="editado">· editado</span>
+      }
+    </span>
+    @if (esMio() && !editando()) {
+      <button type="button" class="editar" (click)="empezarEdicion()">Editar</button>
+    }
+  </div>
+
+  @if (editando()) {
+    <div class="edicion">
+      <label [for]="'editar-' + comentario()._id" class="solo-lector">Editar comentario</label>
+      <textarea [id]="'editar-' + comentario()._id" rows="2" [formControl]="texto" appAutoAltura appAutofoco></textarea>
+      @if (error()) {
+        <span class="error">{{ error() }}</span>
+      }
+      <div class="botones">
+        <button type="button" class="btn" (click)="cancelar()">Cancelar</button>
+        <button type="button" class="btn btn-primario chaflan" [disabled]="guardando()" (click)="guardar()">
+          {{ guardando() ? 'Guardando…' : 'Guardar' }}
+        </button>
+      </div>
+    </div>
+  } @else {
+    <p class="mensaje">{{ comentario().mensaje }}</p>
+  }
+</div>

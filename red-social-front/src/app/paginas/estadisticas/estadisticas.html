@@ -1,0 +1,109 @@
+<div class="pagina">
+  <div class="encabezado">
+    <h1>Estadísticas</h1>
+
+    <form class="filtros" [formGroup]="formulario" (ngSubmit)="aplicar()">
+      <div class="atajos" role="group" aria-label="Rangos rápidos">
+        @for (atajo of atajos; track atajo.dias) {
+          <button type="button" class="atajo" [class.activo]="atajoActivo(atajo.dias)" (click)="usarAtajo(atajo.dias)">
+            {{ atajo.texto }}
+          </button>
+        }
+      </div>
+      <div class="fechas">
+        <div class="campo">
+          <label for="desde">Desde</label>
+          <input id="desde" type="date" formControlName="desde" [max]="hoy" />
+        </div>
+        <div class="campo">
+          <label for="hasta">Hasta</label>
+          <input id="hasta" type="date" formControlName="hasta" [max]="hoy" />
+        </div>
+        <button type="submit" class="btn btn-primario chaflan" [disabled]="cargando()">Aplicar</button>
+      </div>
+      @if (formulario.hasError('rangoInvertido')) {
+        <span class="error">La fecha "desde" no puede ser posterior a "hasta".</span>
+      }
+    </form>
+  </div>
+
+  @if (cargando()) {
+    <app-spinner texto="Calculando estadísticas…" />
+  } @else if (error()) {
+    <div class="panel chaflan-panel vacio">
+      <p>{{ error() }}</p>
+      <button type="button" class="btn" (click)="aplicar()">Reintentar</button>
+    </div>
+  } @else {
+    <div class="grilla">
+      <section class="tarjeta panel chaflan-panel">
+        <header>
+          <h2>Publicaciones por usuario</h2>
+          <p>{{ totalPublicaciones() }} en el período</p>
+        </header>
+        @if (porUsuario().length) {
+          <app-grafico [configuracion]="graficoUsuarios()" descripcion="Gráfico de torta: publicaciones por usuario" />
+          <details>
+            <summary>Ver datos</summary>
+            <table>
+              <thead><tr><th scope="col">Usuario</th><th scope="col">Publicaciones</th></tr></thead>
+              <tbody>
+                @for (fila of porUsuario(); track fila.username) {
+                  <tr><td>&#64;{{ fila.username }}</td><td>{{ fila.cantidad }}</td></tr>
+                }
+              </tbody>
+            </table>
+          </details>
+        } @else {
+          <p class="sin-datos">Nadie publicó en este período.</p>
+        }
+      </section>
+
+      <section class="tarjeta panel chaflan-panel">
+        <header>
+          <h2>Comentarios por día</h2>
+          <p>{{ totalComentarios() }} en el período</p>
+        </header>
+        @if (totalComentarios()) {
+          <app-grafico [configuracion]="graficoDias()" descripcion="Gráfico de líneas: comentarios por día" />
+          <details>
+            <summary>Ver datos</summary>
+            <table>
+              <thead><tr><th scope="col">Día</th><th scope="col">Comentarios</th></tr></thead>
+              <tbody>
+                @for (fila of porDia(); track fila.fecha) {
+                  <tr><td>{{ fila.fecha }}</td><td>{{ fila.cantidad }}</td></tr>
+                }
+              </tbody>
+            </table>
+          </details>
+        } @else {
+          <p class="sin-datos">No hubo comentarios en este período.</p>
+        }
+      </section>
+
+      <section class="tarjeta panel chaflan-panel ancha">
+        <header>
+          <h2>Comentarios por publicación</h2>
+          <p>Las 10 con más comentarios</p>
+        </header>
+        @if (porPublicacion().length) {
+          <app-grafico [configuracion]="graficoPublicaciones()" descripcion="Gráfico de barras: comentarios por publicación" />
+          <details>
+            <summary>Ver datos</summary>
+            <table>
+              <thead><tr><th scope="col">Publicación</th><th scope="col">Comentarios</th></tr></thead>
+              <tbody>
+                @for (fila of porPublicacion(); track fila.publicacionId) {
+                  <tr><td>{{ fila.titulo }}</td><td>{{ fila.cantidad }}</td></tr>
+                }
+              </tbody>
+            </table>
+          </details>
+        } @else {
+          <p class="sin-datos">Ninguna publicación recibió comentarios en este período.</p>
+        }
+      </section>
+    </div>
+  }
+</div>
