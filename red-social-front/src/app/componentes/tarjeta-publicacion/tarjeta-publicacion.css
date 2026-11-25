@@ -1,0 +1,129 @@
+.tarjeta {
+  background: var(--superficie);
+}
+
+.cabecera {
+  padding: 20px 24px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.iniciales {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--secundario);
+  color: var(--fondo);
+  font-weight: 700;
+}
+
+.autor {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.nombre {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.meta {
+  font-size: 13px;
+  color: var(--texto-secundario);
+}
+
+.btn-icono {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: var(--texto-secundario);
+  cursor: pointer;
+}
+
+.btn-icono:hover {
+  color: var(--error);
+}
+
+.cuerpo {
+  padding: 14px 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cuerpo h2 {
+  font-size: 28px;
+  line-height: 1.1;
+}
+
+.mensaje {
+  max-width: 62ch;
+  line-height: 1.55;
+  white-space: pre-line; /* respeta los saltos de línea del texto */
+  overflow-wrap: anywhere;
+}
+
+.imagen {
+  display: block;
+  width: 100%;
+  max-height: 520px;
+  object-fit: cover;
+  background: var(--superficie-alta);
+}
+
+.acciones {
+  padding: 14px 24px 18px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn-me-gusta {
+  height: 38px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--primario);
+  background: transparent;
+  color: var(--primario);
+  cursor: pointer;
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.btn-me-gusta .cantidad {
+  font-family: var(--fuente-texto);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--texto);
+}
+
+.btn-me-gusta.activo {
+  background: var(--primario);
+  color: var(--fondo);
+}
+
+.btn-me-gusta.activo .cantidad {
+  color: var(--fondo);
+}
+
+.btn-me-gusta:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}

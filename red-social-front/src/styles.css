@@ -118,3 +118,13 @@ input, textarea, select, button { font: inherit; color: inherit; }
   cursor: pointer;
 }
 .ver-clave:hover { color: var(--texto); }
+
+/* Oculto a la vista pero accesible para lectores de pantalla */
+.solo-lector {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

@@ -1,0 +1,52 @@
+<form class="nueva chaflan-panel" [formGroup]="formulario" (ngSubmit)="enviar()" novalidate>
+  <div class="campo-linea" [class.invalido]="error('titulo')">
+    <label for="nueva-titulo" class="solo-lector">Título</label>
+    <input id="nueva-titulo" type="text" class="titulo" placeholder="Título de tu jugada" formControlName="titulo" />
+    @if (error('titulo'); as mensaje) {
+      <span class="error">{{ mensaje }}</span>
+    }
+  </div>
+
+  <div class="campo-linea" [class.invalido]="error('mensaje')">
+    <label for="nueva-mensaje" class="solo-lector">Mensaje</label>
+    <textarea id="nueva-mensaje" rows="2" placeholder="Contá qué pasó en la ronda" formControlName="mensaje"></textarea>
+    @if (error('mensaje'); as mensaje) {
+      <span class="error">{{ mensaje }}</span>
+    }
+  </div>
+
+  @if (previsualizacion()) {
+    <div class="vista-previa">
+      <img [src]="previsualizacion()" alt="Vista previa de la imagen" />
+      <button type="button" class="quitar" aria-label="Quitar imagen" (click)="quitarImagen()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+    </div>
+  }
+
+  <div class="pie">
+    <div class="adjuntar">
+      <label for="nueva-imagen" class="btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="14" />
+          <path d="M3 16l5-5 4 4 3-3 6 6" />
+        </svg>
+        {{ imagen() ? 'Cambiar imagen' : 'Agregar imagen' }}
+      </label>
+      <input id="nueva-imagen" type="file" accept="image/*" class="solo-lector" (change)="elegirImagen($event)" />
+      @if (errorImagen()) {
+        <span class="error">{{ errorImagen() }}</span>
+      }
+    </div>
+    <button type="submit" class="btn btn-primario chaflan" [disabled]="enviando()">
+      {{ enviando() ? 'Publicando…' : 'Publicar' }}
+    </button>
+  </div>
+</form>
+
+<app-modal titulo="No pudimos publicar" tipo="error" [abierto]="!!errorEnvio()" (cerrado)="errorEnvio.set(null)">
+  <p>{{ errorEnvio() }}</p>
+  <button acciones type="button" class="btn" (click)="errorEnvio.set(null)">Entendido</button>
+</app-modal>

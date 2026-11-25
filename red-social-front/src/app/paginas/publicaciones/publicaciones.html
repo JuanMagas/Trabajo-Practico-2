@@ -1,2 +1,67 @@
-<h1>Publicaciones</h1>
-<p>Acá van a ir las publicaciones (Sprint 2).</p>
+<div class="disposicion">
+  <div class="columna">
+    <app-nueva-publicacion (publicada)="alPublicar()" />
+
+    <div class="encabezado">
+      <h1>Publicaciones</h1>
+      <div class="orden" role="group" aria-label="Ordenar publicaciones">
+        <button type="button" [class.activo]="orden() === 'fecha'" [attr.aria-pressed]="orden() === 'fecha'" (click)="cambiarOrden('fecha')">
+          Más recientes
+        </button>
+        <button type="button" [class.activo]="orden() === 'meGusta'" [attr.aria-pressed]="orden() === 'meGusta'" (click)="cambiarOrden('meGusta')">
+          Más me gusta
+        </button>
+      </div>
+    </div>
+
+    @if (cargando()) {
+      <div class="estado">
+        <app-spinner texto="Cargando publicaciones…" />
+      </div>
+    } @else if (error()) {
+      <div class="estado panel chaflan-panel">
+        <p>{{ error() }}</p>
+        <button type="button" class="btn" (click)="cargar()">Reintentar</button>
+      </div>
+    } @else if (publicaciones().length === 0) {
+      <div class="estado panel chaflan-panel">
+        <h2>Todavía no hay publicaciones</h2>
+        <p>Contá tu primera jugada con el formulario de arriba.</p>
+      </div>
+    } @else {
+      <div class="lista">
+        @for (publicacion of publicaciones(); track publicacion._id) {
+          <app-tarjeta-publicacion [publicacion]="publicacion" (eliminada)="alEliminar()" />
+        }
+      </div>
+
+      @if (totalPaginas() > 1) {
+        <nav class="paginacion" aria-label="Páginas de publicaciones">
+          <button type="button" class="btn" [disabled]="pagina() === 1" (click)="irAPagina(pagina() - 1)">Anterior</button>
+          <span>Página {{ pagina() }} de {{ totalPaginas() }}</span>
+          <button type="button" class="btn" [disabled]="pagina() === totalPaginas()" (click)="irAPagina(pagina() + 1)">Siguiente</button>
+        </nav>
+      }
+    }
+  </div>
+
+  @if (usuario(); as u) {
+    <aside class="lateral">
+      <div class="perfil panel chaflan-panel">
+        @if (u.fotoPerfil) {
+          <img class="avatar" [src]="u.fotoPerfil" alt="" />
+        } @else {
+          <span class="avatar iniciales" aria-hidden="true">{{ u.nombre[0] }}{{ u.apellido[0] }}</span>
+        }
+        <div>
+          <p class="nombre">{{ u.nombre }} {{ u.apellido }}</p>
+          <p class="usuario">&#64;{{ u.username }}</p>
+        </div>
+        @if (u.descripcion) {
+          <p class="descripcion">{{ u.descripcion }}</p>
+        }
+        <a routerLink="/mi-perfil" class="btn">Ver mi perfil</a>
+      </div>
+    </aside>
+  }
+</div>
